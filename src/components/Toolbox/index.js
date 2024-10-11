@@ -17,6 +17,17 @@ const Toolbox = () => {
             {STROKE_TOOL_TYPE.includes(activeToolItem) && <div className={classes.selectOptionContainer}>
                 <div className={classes.toolBoxLabel}>Stroke Color</div>
                 <div className={classes.colorsContainer}>
+                    <div>
+                        <input
+                            className={classes.colorPicker}
+                            type="color"
+                            value={
+                                strokeColor
+                            }
+                            onChange={(e) => changeStrokeHandler(activeToolItem, e.target.value)}
+                        >
+                        </input>
+                    </div>
                     {Object.keys(COLORS).map((k) => {
                         return (
                             <div
@@ -35,6 +46,29 @@ const Toolbox = () => {
             {FILL_TOOL_TYPE.includes(activeToolItem) && <div className={classes.selectOptionContainer}>
                 <div className={classes.toolBoxLabel}>Fill Color</div>
                 <div className={classes.colorsContainer}>
+                    {fillColor === null ?
+                        (<div
+                            className={cx(classes.colorPicker, classes.noFillColorBox)}
+                            onClick={() => changeFillHandler(activeToolItem, COLORS.BLACK)}
+                        ></div>) :
+                        <div>
+                            <input
+                                className={classes.colorPicker}
+                                type="color"
+                                value={
+                                    fillColor
+                                }
+                                onChange={(e) => changeFillHandler(activeToolItem, e.target.value)}
+                            >
+                            </input>
+                        </div>
+                    }
+                    <div
+                        className={cx(classes.colorBox, classes.noFillColorBox, {
+                            [classes.activeColorBox]: fillColor === null
+                        })}
+                        onClick={() => { changeFillHandler(activeToolItem, null) }}
+                    ></div>
                     {Object.keys(COLORS).map((k) => {
                         return (
                             <div
